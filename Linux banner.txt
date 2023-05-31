@@ -1,0 +1,39 @@
+1 step : Login as Root.
+
+Comds:
+apt-get install figlet
+
+2 comd:
+figlet Dark-Python(text to show in termenal)
+
+3 edit file:
+comd:  leafpad /root/.bashrc
+
+4 add text or style:
+
+figlet Dark-Python
+or 
+echo "Your True tech Navigator"
+
+change banner cmd:
+figlet -f banner "Dark-Python"
+or
+figlet -f big "Dark-Python"
+or
+figlet -f bubble "Dark-Python"
+or 
+figlet -f block "Dark-Python"
+
+
+save and close.
+ 
+
+
+
+
+
+
+
+
+figlet -f big "                          Dark-Python"
+echo -e "\033[1m \e[32m                       Y o u r   t r u e   t e c h   n a v i g a t o r"
