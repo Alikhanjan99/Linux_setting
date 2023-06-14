@@ -1,0 +1,54 @@
+To automatically change your Kali Linux IP address every minute and revert to a valid IP address after a system restart, you can use a Python script in conjunction with the subprocess module to execute shell commands. Please note that changing IP addresses frequently and using invalid IP addresses may have unintended consequences, so proceed with caution. Here's an example code snippet:
+
+python
+Copy code
+import subprocess
+import time
+
+def change_ip_address():
+    # Obtain current IP address details
+    ip_info = subprocess.run(['ifconfig', 'eth0'], capture_output=True, text=True)
+    current_ip = ip_info.stdout.split('\n')[1].split()[1][5:]
+
+    # Generate a new random IP address
+    new_ip = '192.168.0.' + str(random.randint(1, 255))
+
+    # Change the IP address
+    subprocess.run(['ifconfig', 'eth0', new_ip, 'netmask', '255.255.255.0', 'up'])
+    print(f'Changed IP address from {current_ip} to {new_ip}')
+
+while True:
+    change_ip_address()
+    time.sleep(60)
+Save this script as ip_changer.py. To automatically run this script on system startup, you can add it to your system's startup services. Here's an example for systemd:
+
+Create a systemd unit file:
+
+bash
+Copy code
+sudo nano /etc/systemd/system/ip-changer.service
+Add the following content to the file:
+
+csharp
+Copy code
+[Unit]
+Description=IP Changer Service
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /path/to/ip_changer.py
+
+[Install]
+WantedBy=default.target
+Replace /path/to/ip_changer.py with the actual path to your ip_changer.py script.
+
+Save the file and exit the text editor.
+
+Enable the service:
+
+bash
+Copy code
+sudo systemctl enable ip-changer.service
+This will make the script run on system startup.
+
+After following these steps, your Kali Linux system will automatically execute the Python script every minute, changing the IP address accordingly.
